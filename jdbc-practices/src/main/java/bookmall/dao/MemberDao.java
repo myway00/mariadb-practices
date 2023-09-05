@@ -1,6 +1,6 @@
 package bookmall.dao;
 
-import bookmall.common.CommonVar;
+import bookmall.common.JdbcVar;
 import bookmall.vo.MemberVo;
 
 import java.sql.*;
@@ -11,7 +11,7 @@ public class MemberDao {
 
     public List<MemberVo> findAll() {
         String sql = "select no, name, phone, email, password from member;";
-        try (Connection con = DriverManager.getConnection(CommonVar.URL, CommonVar.USER, CommonVar.PASSWORD);
+        try (Connection con = DriverManager.getConnection(JdbcVar.URL, JdbcVar.USER, JdbcVar.PASSWORD);
              PreparedStatement pstmt = con.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
             if (rs.next()) {
@@ -38,7 +38,7 @@ public class MemberDao {
 
     public int insert(MemberVo vo) {
         String sql = "insert into member values(null, ?,?,?,password(?))";
-        try (Connection con = DriverManager.getConnection(CommonVar.URL, CommonVar.USER, CommonVar.PASSWORD);
+        try (Connection con = DriverManager.getConnection(JdbcVar.URL, JdbcVar.USER, JdbcVar.PASSWORD);
              PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, vo.getName());
             pstmt.setString(2, vo.getPhone());

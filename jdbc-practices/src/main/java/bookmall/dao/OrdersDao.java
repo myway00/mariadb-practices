@@ -1,6 +1,6 @@
 package bookmall.dao;
 
-import bookmall.common.CommonVar;
+import bookmall.common.JdbcVar;
 import bookmall.vo.OrdersVo;
 
 import java.sql.*;
@@ -10,7 +10,7 @@ import java.util.List;
 public class OrdersDao {
     public List<OrdersVo> findAll() {
 
-        try (Connection con = DriverManager.getConnection(CommonVar.URL, CommonVar.USER, CommonVar.PASSWORD)) {
+        try (Connection con = DriverManager.getConnection(JdbcVar.URL, JdbcVar.USER, JdbcVar.PASSWORD)) {
             String sql = "SELECT CAST(o.orderNo AS SIGNED) AS orderNo, m.name AS name, price, address FROM `orders` o, member m WHERE o.memberNo = m.no";
 
             try (PreparedStatement pstmt = con.prepareStatement(sql);
@@ -39,7 +39,7 @@ public class OrdersDao {
     }
 
     public int insert(OrdersVo vo) {
-        try (Connection con = DriverManager.getConnection(CommonVar.URL, CommonVar.USER, CommonVar.PASSWORD)) {
+        try (Connection con = DriverManager.getConnection(JdbcVar.URL, JdbcVar.USER, JdbcVar.PASSWORD)) {
             String sql = "INSERT INTO `orders`(no, price, address, memberNo) VALUES (null, ?, ?, ?)";
 
             try (PreparedStatement pstmt = con.prepareStatement(sql)) {

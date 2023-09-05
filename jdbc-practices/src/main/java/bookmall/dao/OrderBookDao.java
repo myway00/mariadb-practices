@@ -1,6 +1,6 @@
 package bookmall.dao;
 
-import bookmall.common.CommonVar;
+import bookmall.common.JdbcVar;
 import bookmall.vo.OrderBookVo;
 
 import java.sql.*;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class OrderBookDao {
     public int insert(OrderBookVo vo) {
-        try (Connection con = DriverManager.getConnection(CommonVar.URL, CommonVar.USER, CommonVar.PASSWORD)) {
+        try (Connection con = DriverManager.getConnection(JdbcVar.URL, JdbcVar.USER, JdbcVar.PASSWORD)) {
             String sql = "insert into orderBook (bookNo, orderNo, quantity) values (?, ?, ?)";
 
             try (PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -29,7 +29,7 @@ public class OrderBookDao {
         String sql = "select b.no as no, b.title as title, b.price*quantity as price, ob.quantity as quantity, cast(o.orderNo as int) as orderNo "
                 + " from book b, `orders` o, orderBook ob "
                 + " where ob.bookNo = b.no and ob.orderNo = o.no";
-        try (Connection con = DriverManager.getConnection(CommonVar.URL, CommonVar.USER, CommonVar.PASSWORD);
+        try (Connection con = DriverManager.getConnection(JdbcVar.URL, JdbcVar.USER, JdbcVar.PASSWORD);
              PreparedStatement pstmt = con.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
             if (rs.next()) {
